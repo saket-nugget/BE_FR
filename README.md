@@ -13,13 +13,40 @@ A Twin-Stream Deepfake Detection System using Vision Transformers (ViT-B/16 / Mo
   - **Background Check**: Low sensitivity check for obvious background anomalies (Threshold: 0.05).
 - **Real-Time UI**: Modern Next.js interface with instant feedback.
 
-## � Screenshots
+## 🏗️ Architecture
+
+The system employs a **Twin-Stream Network** approach:
+
+```mermaid
+graph TD
+    A[Input Image] --> B{Segmentation}
+    B -->|Extract| C[Face Region]
+    B -->|Extract| D[Background Region]
+    
+    C --> E[Face Transformer ViT]
+    D --> F[Background Transformer ViT]
+    
+    E --> G[Face Score]
+    F --> H[Background Score]
+    
+    G --> I{Decision Logic}
+    H --> I
+    
+    I -->|Face < 0.4| J[DEEPFAKE DETECTED]
+    I -->|BG < 0.05| J
+    I -->|Else| K[AUTHENTIC MEDIA]
+    
+    style J fill:#ff4d4d,stroke:#333,stroke-width:2px,color:white
+    style K fill:#00cc66,stroke:#333,stroke-width:2px,color:white
+```
+
+## 📸 Screenshots
 
 | Authentic Media | Deepfake Detected |
 |:---:|:---:|
 | ![Authentic Result](screenshots/authentic_result.png) | ![Deepfake Result](screenshots/deepfake_result.png) |
 
-## �📂 Project Structure
+## 📂 Project Structure
 
 - **`Frontend/`**: Next.js web application (The User Interface).
 - **`Backend/`**: Flask API (The AI Engine).
